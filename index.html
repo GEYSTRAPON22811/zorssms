@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zorssms - Мессенджер</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Экран регистрации -->
+        <div id="registerScreen" class="screen active">
+            <div class="register-bg">
+                <div class="container">
+                    <div class="logo">
+                        <div class="logo-text">ZORSSMS</div>
+                        <p>Безопасный мессенджер</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="registerUsername" placeholder="Ваше имя" class="input-field">
+                        <div class="id-display">
+                            <span id="generatedId">ID будет создан автоматически</span>
+                            <button type="button" class="btn-secondary" onclick="generateNewId()">Сгенерировать ID</button>
+                        </div>
+                        <button class="btn-primary" onclick="register()">Создать аккаунт</button>
+                    </div>
+                    <p class="info-text">Ваш уникальный ID будет использоваться для добавления друзей</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Основной экран мессенджера -->
+        <div id="mainScreen" class="screen">
+            <div class="app-header">
+                <div class="app-title">ZORSSMS</div>
+            </div>
+            <div class="messenger-container">
+                <!-- Боковая панель со списком друзей -->
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <h2 id="currentUserName">Zorssms</h2>
+                        <p id="currentUserId" class="user-id"></p>
+                        <button class="btn-copy" onclick="openOwnProfile()">Мой профиль</button>
+                        <button class="btn-copy" onclick="copyUserId()">Копировать ID</button>
+                    </div>
+
+                    <div class="add-friend-section">
+                        <input type="text" id="friendId" placeholder="ID друга для добавления" class="input-field">
+                        <button class="btn-secondary" onclick="addFriend()">Добавить друга</button>
+                    </div>
+
+                    <div class="friends-list-header">
+                        <h3>Друзья (
+                            <span id="friendsCount">0</span>)</h3>
+                    </div>
+
+                    <div class="friends-list" id="friendsList">
+                        <p class="empty-message">Нет друзей. Добавьте друга через ID.</p>
+                    </div>
+                </div>
+
+                <!-- Основной чат -->
+                <div class="chat-area">
+                    <div class="chat-header" id="chatHeader">
+                        <h2>Выберите друга для общения</h2>
+                    </div>
+
+                    <div class="messages-container" id="messagesContainer">
+                        <div class="empty-message">Выберите контакт из списка друзей</div>
+                    </div>
+
+                    <div class="message-input-area" id="messageInputArea" style="display: none;">
+                        <input type="text" id="messageInput" placeholder="Введите сообщение..." class="input-field" onkeypress="handleKeyPress(event)">
+                        <button class="btn-primary" onclick="sendMessage()">Отправить</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно профиля -->
+        <div id="profileModal" class="modal">
+            <div class="modal-content profile-card">
+                <button class="modal-close" onclick="closeProfile()">&times;</button>
+                
+                <div class="profile-header">
+                    <div class="profile-avatar-upload">
+                        <img id="profileAvatarImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23e0e0e0'/%3E%3Ccircle cx='50' cy='30' r='15' fill='%23999'/%3E%3Cpath d='M20 80 Q50 60 80 80' fill='%23999'/%3E%3C/svg%3E" alt="Avatar" class="avatar-img-lg">
+                        <input type="file" id="avatarUpload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)">
+                        <label for="avatarUpload" class="avatar-upload-btn" onclick="document.getElementById('avatarUpload').click()">Изменить</label>
+                    </div>
+                    <div class="profile-status" id="profileStatus">Офлайн</div>
+                </div>
+
+                <div class="profile-info">
+                    <h2 id="profileName">Имя пользователя</h2>
+                    <p id="profileId" class="profile-id">ID: USER_XXXXXX</p>
+                    <p id="profileBio" class="profile-bio">Без описания</p>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-value" id="messageCount">0</span>
+                            <span class="stat-label">Сообщений</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value" id="friendCount">0</span>
+                            <span class="stat-label">Друзей</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions" id="profileActions">
+                    <!-- Кнопки действий добавляются динамически -->
+                </div>
+
+                <div class="profile-edit-section" id="profileEditSection" style="display: none;">
+                    <h3>Редактировать профиль</h3>
+                    <input type="text" id="editBio" placeholder="Биография" class="input-field">
+                    <button class="btn-primary" onclick="saveBio()">Сохранить</button>
+                    <button class="btn-secondary" onclick="cancelEdit()">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/app.js"></script>
