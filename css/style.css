@@ -1,0 +1,774 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+#app {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.screen.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === Экран регистрации === */
+#registerScreen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.register-bg {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 3em;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.logo p {
+    color: #999;
+    font-size: 0.95em;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-field {
+    padding: 14px 16px;
+    border: 2px solid #e8e8e8;
+    border-radius: 10px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    background: #f9f9f9;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 15px rgba(102, 126, 234, 0.15);
+}
+
+.id-display {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.85em;
+    color: #666;
+    word-break: break-all;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.btn-primary {
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    padding: 10px 15px;
+    background: #f0f0f0;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-weight: 500;
+}
+
+.btn-secondary:hover {
+    background: white;
+    border-color: #667eea;
+    color: #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.15);
+}
+
+.info-text {
+    text-align: center;
+    color: #999;
+    font-size: 0.85em;
+    margin-top: 10px;
+}
+
+/* === Заголовок приложения === */
+.app-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.app-title {
+    font-size: 1.8em;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* === Основной экран мессенджера === */
+#mainScreen {
+    background: white;
+    padding-top: 60px;
+}
+
+.messenger-container {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 60px);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.sidebar {
+    width: 350px;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+.sidebar-header h2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.user-id {
+    color: #999;
+    font-size: 0.85em;
+    margin-bottom: 10px;
+    word-break: break-all;
+}
+
+.btn-copy {
+    width: 100%;
+    padding: 10px 12px;
+    background: white;
+    border: 2px solid #e8e8e8;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #333;
+    margin: 5px 0;
+}
+
+.btn-copy:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-color: #667eea;
+    color: #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.add-friend-section {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-friend-section input {
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.9em;
+}
+
+.add-friend-section button {
+    padding: 10px;
+}
+
+.friends-list-header {
+    padding: 15px;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.friends-list-header h3 {
+    font-size: 1em;
+    color: #333;
+}
+
+.friends-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.friend-item {
+    padding: 12px 15px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.friend-item:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-2px);
+}
+
+.friend-item.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.online-indicator {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid white;
+}
+
+.online-indicator.online {
+    background: #51cf66;
+    box-shadow: 0 0 8px #51cf66;
+}
+
+.online-indicator.offline {
+    background: #adb5bd;
+}
+
+.friend-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+    position: relative;
+}
+
+.friend-name {
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.friend-id {
+    font-size: 0.75em;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+.friend-status {
+    font-size: 0.75em;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+.friend-item.active .friend-id {
+    opacity: 0.8;
+}
+
+.remove-friend-btn {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.remove-friend-btn:hover {
+    opacity: 1;
+}
+
+.empty-message {
+    color: #999;
+    text-align: center;
+    padding: 30px 15px;
+    font-size: 0.9em;
+}
+
+/* === Область чата === */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.chat-header {
+    padding: 20px;
+    border-bottom: 2px solid #e0e0e0;
+    background: white;
+}
+
+.chat-header h2 {
+    color: #333;
+    font-size: 1.2em;
+}
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #fafafa;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 10px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.sent {
+    justify-content: flex-end;
+}
+
+.message.received {
+    justify-content: flex-start;
+}
+
+.message-content {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    word-wrap: break-word;
+    font-size: 0.95em;
+}
+
+.message.sent .message-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 18px 18px 0 18px;
+}
+
+.message.received .message-content {
+    background: white;
+    color: #333;
+    border: 1px solid #e0e0e0;
+    border-radius: 18px 18px 18px 0;
+}
+
+.message-time {
+    font-size: 0.75em;
+    opacity: 0.6;
+    margin-top: 4px;
+    padding: 0 10px;
+}
+
+.message-input-area {
+    padding: 15px;
+    background: white;
+    border-top: 2px solid #e0e0e0;
+    display: flex;
+    gap: 10px;
+}
+
+.message-input-area input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.95em;
+}
+
+.message-input-area input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.message-input-area button {
+    padding: 10px 25px;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+    .messenger-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-height: 30vh;
+    }
+
+    .chat-area {
+        height: 70vh;
+    }
+
+    .message-content {
+        max-width: 80%;
+    }
+
+    .container {
+        max-width: 90%;
+    }
+}
+
+/* === Прокрутка === */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #667eea;
+}
+
+/* === МОДАЛЬНОЕ ОКНО ПРОФИЛЯ === */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    position: relative;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+    z-index: 10001;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+.profile-card {
+    padding: 0;
+}
+
+.profile-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 20px;
+    text-align: center;
+    position: relative;
+    border-radius: 15px 15px 0 0;
+}
+
+.profile-avatar-upload {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+}
+
+.avatar-img-lg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+}
+
+.avatar-upload-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #667eea;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.8em;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.avatar-upload-btn:hover {
+    background: #764ba2;
+    transform: scale(1.1);
+}
+
+.profile-status {
+    color: white;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.profile-info {
+    padding: 25px;
+    text-align: center;
+}
+
+.profile-info h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.profile-id {
+    color: #999;
+    font-size: 0.85em;
+    margin-bottom: 15px;
+    word-break: break-all;
+}
+
+.profile-bio {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 20px 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85em;
+    color: #999;
+}
+
+.profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 25px 25px;
+}
+
+.profile-actions .btn-primary,
+.profile-actions .btn-secondary {
+    width: 100%;
+    padding: 12px;
+}
+
+.profile-edit-section {
+    padding: 25px;
+    border-top: 1px solid #e0e0e0;
+    background: #f9f9f9;
+}
+
+.profile-edit-section h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.profile-edit-section input {
+    margin-bottom: 10px;
+}
+
+.profile-edit-section .btn-primary,
+.profile-edit-section .btn-secondary {
+    width: 100%;
+    margin-bottom: 10px;
+}
